@@ -1,0 +1,31 @@
+# Dekoploy config (placeholder)
+# Replace the values below with your Dekoploy project settings.
+
+project: your-project-name
+provider: hostinger
+env:
+  MONGO_URI: ${MONGO_URI}
+
+build:
+  - name: Build backend
+    dir: backend
+    command: docker build -t your-registry/your-backend:latest .
+
+  - name: Build frontend
+    dir: frontend
+    command: docker build -t your-registry/your-frontend:latest .
+
+deploy:
+  - name: SSH Deploy to Hostinger
+    type: ssh
+    host: your.hostinger.ip
+    user: youruser
+    pre_commands:
+      - docker pull your-registry/your-backend:latest
+      - docker pull your-registry/your-frontend:latest
+    commands:
+      - docker compose pull
+      - docker compose up -d --remove-orphans
+
+# Note: Dekoploy platforms have different config formats. Use this file as a template
+# and adapt it to Dekoploy's required schema or supply commands in the Dekoploy web UI.
