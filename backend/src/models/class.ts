@@ -14,7 +14,7 @@ export interface IClass extends mongoose.Document {
 const ClassSchema = new mongoose.Schema<IClass>({
     name: {type: String, required: true, trim: false},
     academicYear: {type: Schema.Types.ObjectId, required: true, ref: 'AcademicYear'},
-    classTeacher: {type: Schema.Types.ObjectId, required: true, ref: 'User', default: null},
+    classTeacher: {type: Schema.Types.ObjectId, required: false, ref: 'User', default: null},
     students: [{type:Schema.Types.ObjectId, ref: 'User'}],
     subjects: [{type: Schema.Types.ObjectId, ref: 'Subject'}],
     capacity: {type: Number, default: 40}

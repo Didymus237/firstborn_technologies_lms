@@ -6,8 +6,8 @@ import { authorize, protect } from "../middleware/auth";
 const academicYearRouter = express.Router();
 
 academicYearRouter.post('/create', protect, authorize(['admin']), createAcademicYear);
-academicYearRouter.get('/current', protect, authorize(['admin']), getCurrentAcademicYear);
-academicYearRouter.get('/', protect, authorize(['admin']), getAcademicYears);
+academicYearRouter.get('/current', protect, getCurrentAcademicYear);
+academicYearRouter.get('/', protect, getAcademicYears);
 academicYearRouter.patch('/update/:id', protect, authorize(['admin']), updateAcademicYear);
 academicYearRouter.delete('/delete/:id', protect, authorize(['admin']), deleteAcademicYear);
 

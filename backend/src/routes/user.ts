@@ -4,7 +4,7 @@ import express from 'express';
 // Create a router for user-related routes
 const userRoutes = express.Router();
 
-import { registerUser, login, updateUser, deleteUser, logoutUser, getUserProfile, getAllUsers } from '../controllers/user';
+import { registerUser, login, updateUser, deleteUser, logoutUser, getUserProfile, updateUserProfile, getAllUsers, getUserByEnrollment } from '../controllers/user';
 import { protect, authorize } from '../middleware/auth';
 import { register } from 'node:module';
 
@@ -12,10 +12,11 @@ userRoutes.post('/register', registerUser);
 userRoutes.post('/login', login);
 userRoutes.post('/logout', logoutUser);
 userRoutes.get('/profile', protect, getUserProfile);
+userRoutes.put('/profile', protect, updateUserProfile);
 
 userRoutes.get('/',
      protect, 
-     authorize(['admin', 'teacher', ]),
+     authorize(['admin', 'teacher', 'student']),
      getAllUsers
 );
 userRoutes.get('/pages',
@@ -23,11 +24,13 @@ userRoutes.get('/pages',
      authorize(['admin', 'teacher', ]),
      getAllUsers
 );
-userRoutes.post('/register',
-     protect, 
-     authorize(['admin', 'teacher', ]),
-     registerUser
+
+userRoutes.get('/enrollment/:id',
+     protect,
+     authorize(['admin', 'teacher']),
+     getUserByEnrollment
 );
+
 
 userRoutes.patch('/update/:id',
      protect, 

@@ -3,13 +3,11 @@ import ActivitiesLog from "../models/activitieslog";
 import mongoose from "mongoose"; // Add this import
 
 export const logActivity = async({
-    userId, 
-    action, 
-    details
+    userId, action, details
 }: {
-    userId: string,
-    action: string,
-    details?: string
+    userId: string;
+    action: string;
+    details?: string;
 }) => {
     try {
         await ActivitiesLog.create({

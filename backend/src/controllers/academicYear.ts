@@ -88,9 +88,15 @@ export const getAcademicYears = async (req: Request, res: Response): Promise<voi
 
 export const getCurrentAcademicYear = async (req: Request, res: Response): Promise<void> => {
     try {
-        const currentYear = await AcademicYear.findOne({ iscurrent: true });
+        let currentYear = await AcademicYear.findOne({ iscurrent: true });
+
+        // Fallback: If none marked as 'current', get the most recent one to prevent app crash
         if (!currentYear) {
-            res.status(404).json({ message: 'No active academic year found' });
+            currentYear = await AcademicYear.findOne().sort({ createdAt: -1 });
+        }
+
+        if (!currentYear) {
+            res.status(404).json({ message: 'No academic years structurally located in database' });
             return;
         }
         res.json(currentYear);

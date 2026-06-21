@@ -18,9 +18,28 @@ export interface IUser extends Document {
   email: string;
   password: string;
   role: UserRoles;
+  country: string;
   isActive: boolean;
-  studentClass?: string | null;
+  phone?: string;
+  studentClass?: mongoose.Types.ObjectId | string | null;
   teacherSubjects?: string[] | null;
+  enrollmentNumber?: string;
+  fatherName?: string;
+  dob?: Date;
+  presentAddress?: string;
+  permanentAddress?: string;
+  department?: string;
+  courseDuration?: string;
+  photoUrl?: string;
+  rollNumber?: string;
+  internshipSchool?: string;
+  trainingDuration?: string;
+  amountPaid?: number;
+  amountPending?: number;
+  totalTrainingFee?: number;
+  trainingStartDate?: Date;
+  trainingEndDate?: Date;
+  passportNumber?: string;
   matchPassword(enteredPassword: string): Promise<boolean>;
 }
 
@@ -30,9 +49,28 @@ const UserSchema: Schema<IUser> = new Schema({
   email: { type: String, required: true},
   password: { type: String, required: true },
   role: { type: String, enum: Object.values(UserRole), required: true, default: UserRole.STUDENT},
+  country: { type: String, default: 'India' },
   isActive: { type: Boolean, default: true },
   studentClass: { type: mongoose.Schema.Types.ObjectId, ref: 'Class' }, // for students
-  teacherSubjects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Subject' }] // for teachers
+  phone: { type: String },
+  teacherSubjects: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Subject' }], // for teachers
+  enrollmentNumber: { type: String, unique: true, sparse: true },
+  rollNumber: { type: String },
+  fatherName: { type: String },
+  dob: { type: Date },
+  presentAddress: { type: String },
+  permanentAddress: { type: String },
+  department: { type: String },
+  courseDuration: { type: String },
+  photoUrl: { type: String, default: "https://ui-avatars.com/api/?name=User" },
+  internshipSchool: { type: String },
+  trainingDuration: { type: String },
+  amountPaid: { type: Number, default: 0 },
+  amountPending: { type: Number, default: 0 },
+  totalTrainingFee: { type: Number, default: 0 },
+  trainingStartDate: { type: Date },
+  trainingEndDate: { type: Date },
+  passportNumber: { type: String }
 }, {
   timestamps: true
 });

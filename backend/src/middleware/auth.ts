@@ -35,6 +35,28 @@ export const protect = async(
 
      }
 
+export const optionalProtect = async(
+    req: AuthenticatedRequest, 
+    res: Response,
+    next: NextFunction) => {
+        let token;
+
+        if (req.cookies && req.cookies.jwt) {
+            token = req.cookies.jwt;
+        }
+
+        if (token){
+            try{
+                const decoded: any = jwt.verify(token, process.env.JWT_SECRET as string) ;
+                const userId = decoded.userId || decoded.id;
+                req.user = (await User.findById(userId).select('-password')) as IUser;
+            } catch (error) {
+                console.error("Optional auth failed:", error);
+            }
+        }
+        next();
+     }
+
      /** 
       * accepts a list of allowed roles and checks if the user has one of those roles
       * usage: router.post('/admin-only', protect, authorize('admin'), adminController);
