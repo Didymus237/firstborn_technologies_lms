@@ -5,7 +5,9 @@
   "private": true,
   "scripts": {
     "dev": "nodemon --exec bun run src/server.ts",
-    "start": "bun --watch src/server.ts"
+    "build": "npm ci --include=dev && tsc -p tsconfig.build.json",
+    "start": "node dist/server.js",
+    "start:dev": "bun --watch src/server.ts"
   },
   "devDependencies": {
     "@types/bcryptjs": "^3.0.0",
@@ -17,21 +19,31 @@
     "@types/morgan": "^1.9.10",
     "@types/multer": "^2.1.0",
     "@types/node": "^25.5.0",
+    "@types/nodemailer": "^7.0.11",
     "@types/uuid": "^11.0.0"
   },
   "peerDependencies": {
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@ai-sdk/google": "^3.0.43",
+    "ai": "^6.0.116",
     "bcryptjs": "^3.0.3",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "helmet": "^8.1.0",
-    "inngest": "^3.52.7",
+    "inngest": "^4.0.2",
+    "inngest-cli": "1.17.5",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.0",
-    "morgan": "^1.10.1"
+    "morgan": "^1.10.1",
+    "multer": "^2.1.1",
+    "nodemailer": "^8.0.3",
+    "paytmchecksum": "^1.5.1",
+    "stripe": "^20.4.1",
+    "uuid": "^13.0.0",
+    "zod": "^4.3.6"
   }
 }
